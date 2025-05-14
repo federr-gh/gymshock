@@ -47,16 +47,7 @@ exports.login = (req, res, next) => {
                 token,
                 user: payload
             });
-            /*return res.json({
-                success: true,
-                user: {
-                    id: user._id,
-                    username: user.username,
-                    email: user.email,
-                    role: user.role
-                }
-            });
-            */
+            
         });
     })(req, res, next);
 };
