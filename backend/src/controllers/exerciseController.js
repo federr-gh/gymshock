@@ -8,7 +8,7 @@ const asyncHandler = fn => (req, res, next) =>
  * @route   GET /api/exercises
  */
 exports.getExercises = asyncHandler(async (req, res) => {
-    const { bodyPart, equipment, target, search, page = 1, limit = 20 } = req.query;
+    const { bodyPart, equipment, target, search, page = 1, limit = 2000 } = req.query;
 
     const filter = {};
     if (bodyPart && bodyPart !== 'all') filter.bodyPart = bodyPart;
