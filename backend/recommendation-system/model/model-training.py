@@ -31,5 +31,5 @@ def recommend(exercise):
     distance = sorted(list(enumerate(similarity[index])), reverse=True, key=lambda x: x[1])[1:6]
     print([exercises.iloc[x[0]]['name'] for x in distance])
 
-pickle.dump(exercises, open('exercises.pkl', 'wb'))
-pickle.dump(similarity, open('similarity.pkl', 'wb'))
+#pickle.dump(exercises, open('exercises.pkl', 'wb'))
+#pickle.dump(similarity, open('similarity.pkl', 'wb'))
