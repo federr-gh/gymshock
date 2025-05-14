@@ -2,6 +2,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/User');
+const JWTStrategy = require('passport-jwt-cookiecombo');
 
 // Configurar estrategia local (username + password)
 passport.use(new LocalStrategy(
@@ -23,6 +24,26 @@ passport.use(new LocalStrategy(
             }
 
             // Autenticación exitosa
+            return done(null, user);
+        } catch (err) {
+            return done(err);
+        }
+    }
+));
+
+// Estrategia JWT + Cookie (protección de rutas)
+passport.use(new JWTStrategy(
+    {
+        secretOrPublicKey: process.env.JWT_SECRET, // define esto en tu .env
+        jwtCookieName: 'jwt', // nombre de la cookie
+        authScheme: 'Bearer', // opcional si también aceptas Authorization: Bearer
+        passReqToCallback: false
+    },
+    async function (payload, done) {
+        try {
+            const user = await User.findById(payload.id);
+            if (!user) return done(null, false);
+
             return done(null, user);
         } catch (err) {
             return done(err);

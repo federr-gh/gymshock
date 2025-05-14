@@ -5,6 +5,11 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+    secret: process.env.NEXTAUTH_SECRET, // Add this line
+    session: {
+        strategy: "jwt", // Explicitly set JWT strategy
+    },
+    trustHost: true, // Important for production
     pages: {
         signIn: "/login",
         signOut: "/logout",

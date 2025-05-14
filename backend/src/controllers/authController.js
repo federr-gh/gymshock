@@ -1,6 +1,7 @@
 // src/controllers/authController.js
 const User = require('../models/User');
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
 // Login utilizando Passport.js
 exports.login = (req, res, next) => {
@@ -21,7 +22,32 @@ exports.login = (req, res, next) => {
                 return next(err);
             }
 
+            // Crear payload para el token
+            const payload = {
+                id: user._id,
+                username: user.username,
+                role: user.role
+            };
+
+            const token = jwt.sign(payload, process.env.JWT_SECRET, {
+                expiresIn: '1d'
+            });
+
+            // Establecer cookie segura (httpOnly)
+            res.cookie('jwt', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'Strict',
+                maxAge: 24 * 60 * 60 * 1000 // 1 día
+            });
+
+            // También enviar el token en el JSON (para Postman)
             return res.json({
+                success: true,
+                token,
+                user: payload
+            });
+            /*return res.json({
                 success: true,
                 user: {
                     id: user._id,
@@ -30,6 +56,7 @@ exports.login = (req, res, next) => {
                     role: user.role
                 }
             });
+            */
         });
     })(req, res, next);
 };
