@@ -3,6 +3,7 @@ import { Box, Dumbbell, UserCircle2 } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import SimpleParallax from "simple-parallax-js";
+import SimilarExercises from './SimilarExcercises';
 
 interface DetailProps {
   exerciseDetail: {
@@ -14,6 +15,8 @@ interface DetailProps {
     id?: string;
   };
 }
+
+
 
 const Detail: React.FC<DetailProps> = ({ exerciseDetail }) => {
   const { name, gifUrl, target, equipment, bodyPart, id } = exerciseDetail;
@@ -101,6 +104,13 @@ const Detail: React.FC<DetailProps> = ({ exerciseDetail }) => {
           ))}
         </div>
       </div>
+    {/* Sección de ejercicios recomendados */}
+    {id && name && (
+      <SimilarExercises 
+        id={id} 
+        exerciseName={name}  // Pasa el nombre del ejercicio como prop
+      />
+      )}
     </div>
   );
 };

@@ -11,6 +11,23 @@ export const exerciseOptions = {
     }
 };
 
+export const fetchRecommendations = async (exerciseName: string) => {
+  try {
+    const response = await fetch(
+      `http://localhost:5500/api/recommendations?exercise=${encodeURIComponent(exerciseName)}`
+    );
+    
+    if (!response.ok) {
+      throw new Error('Error al obtener recomendaciones');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching recommendations:', error);
+    throw error;
+  }
+};
+
 export const youtubeOptions = {
     method: 'GET',
     headers: {

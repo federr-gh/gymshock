@@ -18,8 +18,8 @@ npm install
 npm install passport-jwt-cookiecombo
 
 # Api Fast
-cd recommendation-system
+cd ../frontend/services/api-fast
 python -m venv env
 env\Scripts\activate
-pip install fastapi uvicorn
-uvicorn recomendador_api:app
+pip install fastapi uvicorn pandas scikit-learn
+uvicorn api:app
